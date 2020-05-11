@@ -1,23 +1,30 @@
 const express = require('express');
 let app = express();
- 
-const users = require('./fixtures/users.json')
-const emails = require('./fixtures/emails.json')
-const admins = require('./fixtures/admins.cvs');
-const guestbook = require('./fixtures/guests.xml');
+
+// const users = require('./fixtures/users.json');
  
 app.use((req, res) => {
- let route = req.method + ' ' + req.url;
- 
- res.type("json"); // Creates "Content-Type" in the response header (RESPONSE TYPE).
- 
- if (route === 'GET /users') {
-   res.send(users);
- } else if (route === 'GET /emails') {
-   res.send(emails);
- } else {
-   res.end('You asked for ' + route);
- }
+	let route = req.method + ' ' + req.url;
+
+  if (req.accepts(['json', 'text'])) {
+    res.sendFile("/", {
+       root: "./fixture/users.json"
+    });
+    res.status(200).end();
+  } else if (req.accepts('cvs')) {
+    res.sendFile("/", {
+       root: "./fixture/users.cvs"
+    });
+    res.status(200).end();
+  } else if (req.accepts('xml')) {
+    res.sendFile("/", {
+       root: "./fixture/users.xml"
+    });
+    res.status(200).end();
+  } else {
+    res.render('406', 'Content-type not supported');
+  }
+
 });
  
 app.listen(3000);
