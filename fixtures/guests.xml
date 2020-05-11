@@ -1,0 +1,14 @@
+<guestbook>
+  <guest>
+    <fname>Micky</fname>
+    <lname>Mouse</lname>
+  </guest>
+  <guest>
+    <fname>Minnie</fname>
+    <lname>Mouse</lname>
+  </guest>
+  <guest>
+    <fname>Hannibal</fname>
+    <lname>Lector</lname>
+  </guest>
+</guestbook>
