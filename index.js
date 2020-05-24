@@ -2,37 +2,40 @@ const express = require('express');
 let app = express();
 
 console.log("RUNNING...")
-// const users = require('./fixtures/users.json');
+console.log("__dirname = " + __dirname);
 
 app.use((req, res) => {
 	let route = req.method + ' ' + req.url;
 
-  console.log(req.accepts('json'))
-  console.log(req.accepts('xml'))
+  // Set/Verify Title Tag
+  res.set('title', 'My Content-Type Test Site');
+  console.log(res.get('title'))
 
-  /* Issue! */
-  if (req.accepts(['json', 'text'])) {
-    res.type('json');
-    res.sendFile("/", {
-       root: "./fixture/users.json"
-    });
-    res.status(200);
-  } else if (req.accepts('cvs')) {
-    res.type('cvs');
-    res.sendFile("/", {
-       root: "./fixture/users.cvs"
-    });
-    res.status(200);
-  } else if (req.accepts('xml')) {
-    res.type('xml');
-    res.sendFile("/", {
-       root: "./fixture/users.xml"
-    });
-    res.status(200);
-  } else {
-    res.render('406', 'Content-type not supported');
-  }
-
+  
+  /* Check client request for a supported content-type */
+  res.format({
+    'application/xml': function () {
+      res.type('xml')
+      res.send('<myxml><message>Hey Mr. XML man!</message></myxml>')
+    },
+    'text/html': function () {
+      res.type('html')
+      res.send('<p>Hey <b>man</b>!</p>')
+    },
+    'text/csv': function () {
+      res.type('csv')
+      res.send('Hey, Mr., CSV, man.')
+    },
+    'application/json': function () {
+      res.type('json')
+      res.send({ message: 'hey mr. JSON man' })
+    },
+    default: function () {
+      // log the request and respond with 406
+      res.status(406).send('This behavior will not be accepted, that is to say, and you can quote me on this... "No".');
+    }
+  })
+  
   res.end()
 
 });

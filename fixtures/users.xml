@@ -1,14 +1,17 @@
-<guestbook>
-  <guest>
-    <fname>Micky</fname>
-    <lname>Mouse</lname>
-  </guest>
-  <guest>
-    <fname>Minnie</fname>
-    <lname>Mouse</lname>
-  </guest>
-  <guest>
-    <fname>Hannibal</fname>
-    <lname>Lector</lname>
-  </guest>
-</guestbook>
+<GUESTBOOK>
+  <GUEST>
+    <ID>01</ID>
+    <NAME>Micky</NAME>
+    <PASSWORD>1111</PASSWORD>
+  </GUEST>
+  <GUEST>
+    <ID>02</ID>
+    <NAME>Minnie</NAME>
+    <PASSWORD>1112</PASSWORD>
+  </GUEST>
+  <GUEST>
+    <ID>03</ID>
+    <NAME>H. Lector</NAME>
+    <PASSWORD>1357</PASSWORD>
+  </GUEST>
+</GUESTBOOK>
