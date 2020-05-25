@@ -39,7 +39,8 @@ app.use((req, res) => {
   if( outputFilename ) {
     fs.readFile( outputFilename, function (err, data) {
       if (err) {
-        next(err) // Pass errors to Express.
+        console.log("Express will handle filename error.")
+        //next(err) // Pass errors to Express.
       } else {
         res.send(data);
         res.end()
