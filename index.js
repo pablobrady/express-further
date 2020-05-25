@@ -1,42 +1,51 @@
 const express = require('express');
+var fs = require('fs');
 let app = express();
 
 console.log("RUNNING...")
 console.log("__dirname = " + __dirname);
 
 app.use((req, res) => {
-	let route = req.method + ' ' + req.url;
+	// let route = req.method + ' ' + req.url;
 
   // Set/Verify Title Tag
-  res.set('title', 'My Content-Type Test Site');
-  console.log(res.get('title'))
-
-  
+  res.set('title', 'My Mini Content-Type Test Site');
+  var outputFilename = null;
+    
   /* Check client request for a supported content-type */
   res.format({
     'application/xml': function () {
-      res.type('xml')
-      res.send('<myxml><message>Hey Mr. XML man!</message></myxml>')
+      outputFilename = './fixtures/users.xml';
     },
     'text/html': function () {
       res.type('html')
-      res.send('<p>Hey <b>man</b>!</p>')
+      outputFilename = './public/index.html'
     },
     'text/csv': function () {
       res.type('csv')
-      res.send('Hey, Mr., CSV, man.')
+      outputFilename = './fixtures/users.csv';
     },
     'application/json': function () {
       res.type('json')
-      res.send({ message: 'hey mr. JSON man' })
+      outputFilename = './fixtures/users.json';
     },
     default: function () {
       // log the request and respond with 406
-      res.status(406).send('This behavior will not be accepted, that is to say, and you can quote me on this... "No".');
+      res.status(406).send('This behavior will not be accepted, that is to say, and you can quote me on this... "Um, no".');
+      res.end()
     }
   })
-  
-  res.end()
+
+  if( outputFilename ) {
+    fs.readFile( outputFilename, function (err, data) {
+      if (err) {
+        next(err) // Pass errors to Express.
+      } else {
+        res.send(data);
+        res.end()
+      }
+    })
+  }
 
 });
  
